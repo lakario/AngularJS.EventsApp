@@ -1,60 +1,31 @@
 'use strict';
 
 eventsApp.controller('EventController',
-    function EventsController($scope) {
+    function EventsController($scope, eventData) {
+        $scope.sortorder = 'name';
+        $scope.limit = 5;
 
-        $scope.snippet = '<span style="color:red;">hi there</span>';
-        $scope.boolValue = true;
-        $scope.mystyle = {color:'red'};
-        $scope.myclass = 'blue';
-        $scope.buttonDisabled = true;
+        var eventPromise = eventData.getEvent();
 
-        $scope.event = {
-            name: 'AngularJS Bootcamp',
-            date: '1/2/2013',
-            time: '1:00 pm',
-            location: {
-                address: '123 Fake St',
-                city: 'Mountain View',
-                state: 'CA'
+        eventPromise.then(
+            function(event) {
+                $scope.event = event;
             },
-            imageUrl: 'img/AngularJS-large.png',
-            sessions: [
-                {
-                    name: 'Directives Masterclass',
-                    creatorName: 'Bob Smith',
-                    duration: '1 hr',
-                    level: 'Advanced',
-                    abstract: 'In this session you will learn the inns and outs of directives!',
-                    upVoteCount: 0
-                },
-                {
-                    name: 'Scopes for fun and profit',
-                    creatorName: 'John Doe',
-                    duration: '30 mins',
-                    level: 'Intermediate',
-                    abstract: 'Vivamus commodo, enim ut commodo fermentum, augue est tempus libero, ut fermentum magna turpis sed nisl.',
-                    upVoteCount: 0
-                },
-                {
-                    name: 'Well Behaved Controllers',
-                    creatorName: 'Mike Jones',
-                    duration: '2 hrs',
-                    level: 'Beginner',
-                    abstract: 'Aenean mauris nunc, porttitor eu lorem quis, tincidunt molestie neque.',
-                    upVoteCount: 0
-                }
-            ]
-        };
+            function(response) {
+                console.log(response);
+            }
+        );
 
-        $scope.upVoteSession = function($event, session) {
+        $scope.event = eventData.getEvent();
+
+        $scope.upVoteSession = function(event, session) {
             session.upVoteCount++;
-            flash($event.currentTarget);
+            flash(event.currentTarget);
         };
 
-        $scope.downVoteSession = function($event, session) {
+        $scope.downVoteSession = function(event, session) {
             session.upVoteCount--;
-            flash($event.currentTarget);
+            flash(event.currentTarget);
         };
 
         var flash = function(element) {
