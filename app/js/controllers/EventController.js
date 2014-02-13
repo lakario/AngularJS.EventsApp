@@ -1,39 +1,69 @@
 'use strict';
 
 eventsApp.controller('EventController',
-    function EventsController($scope, eventData) {
+    function EventsController($scope, $anchorScroll, eventData, userManager) {
         $scope.sortorder = 'name';
         $scope.limit = 5;
+        $scope.isUser = false;
 
-        var eventPromise = eventData.getEvent();
+        userManager.getCurrentUser().then(function (user) {
+            $scope.currentUser = user;
+            $scope.isUser = user !== undefined;
+        });
 
-        eventPromise.then(
-            function(event) {
+        eventData.getEvent(1).then(
+            function (event) {
                 $scope.event = event;
             },
-            function(response) {
+            function (response) {
                 console.log(response);
             }
         );
 
-        $scope.event = eventData.getEvent();
+        $scope.upVoteSession = function (clickEvent, eventId, session) {
+            if (!$scope.isUser) {
+                console.log('Unauthenticated attempt to vote.');
+                return;
+            }
 
-        $scope.upVoteSession = function(event, session) {
-            session.upVoteCount++;
-            flash(event.currentTarget);
+            eventData.recordVote(eventId, session.id, $scope.currentUser, 1).then(function () {
+                eventData.getEvent(eventId).then(function (event) {
+                    $scope.event = event;
+                    flash($(clickEvent.currentTarget).siblings('.badge').eq(0));
+                });
+            })
         };
 
-        $scope.downVoteSession = function(event, session) {
-            session.upVoteCount--;
-            flash(event.currentTarget);
+        $scope.downVoteSession = function (clickEvent, eventId, session) {
+            if (!$scope.isUser) {
+                console.log('Unauthenticated attempt to vote.');
+                return;
+            }
+
+            eventData.recordVote(eventId, session.id, $scope.currentUser, -1).then(function () {
+                eventData.getEvent(eventId).then(function (event) {
+                    $scope.event = event;
+                    flash($(clickEvent.currentTarget).siblings('.badge').eq(0));
+                });
+            })
         };
 
-        var flash = function(element) {
-            $(element).siblings('.badge').eq(0).finish().animate({
+        $scope.scrollToSession = function () {
+            $anchorScroll();
+        }
+
+        $scope.$on('user.changed', function(event, user) {
+            $scope.currentUser = user;
+            $scope.isUser = user !== undefined;
+        });
+
+        var flash = function (element) {
+            $(element).finish().animate({
                 opacity: .3
             }, 'slow').animate({
-                opacity: 1
-            }, 'slow');
+                    opacity: 1
+                }, 'slow');
         }
+
     }
 );

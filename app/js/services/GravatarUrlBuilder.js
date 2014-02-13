@@ -1,6 +1,6 @@
 'use strict';
 
-eventsApp.factory('gravatar', function() {
+eventsApp.factory('gravatarUrlBuilder', function() {
     return {
         buildGravatarUrl: function(email) {
             var defaultGravatarUrl = "http://www.gravatar.com/avatar/000?s=200";
