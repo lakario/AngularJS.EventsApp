@@ -25,5 +25,9 @@ eventsApp.controller('EditProfileController',
                 });
             }
         }
+
+        $scope.cancelEdit = function() {
+            window.location.hash = '#/events';
+        }
     }
 )

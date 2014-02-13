@@ -1,7 +1,7 @@
 'use strict';
 
 eventsApp.controller('EventController',
-    function EventsController($scope, $anchorScroll, eventData, userManager) {
+    function EventsController($scope, $anchorScroll, $routeParams, eventData, userManager) {
         $scope.sortorder = 'name';
         $scope.limit = 5;
         $scope.isUser = false;
@@ -11,7 +11,7 @@ eventsApp.controller('EventController',
             $scope.isUser = user !== undefined;
         });
 
-        eventData.getEvent(1).then(
+        eventData.getEvent($routeParams.eventId).then(
             function (event) {
                 $scope.event = event;
             },
