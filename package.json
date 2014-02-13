@@ -1,12 +1,16 @@
 {
-  "name": "angularjs-seed",
+  "name": "eventsApp",
   "description": "A starter project for AngularJS",
-  "repository": "https://github.com/angular/angular-seed",
+  "repository": "https://github.com/lakario/AngularJS.EventsApp",
   "devDependencies": {
     "phantomjs" : "~1.9",
     "karma" : "~0.10",
     "karma-junit-reporter" : "~0.1",
     "karma-jasmine" : "~0.1",
     "protractor" : "~0.17.0"
+  },
+  "engines": {
+	"node": "0.10.13",
+	"npm": "1.3.2"
   }
 }
