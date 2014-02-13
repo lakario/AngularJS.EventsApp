@@ -16,12 +16,17 @@
                     <li><a href="/EditProfile.html">Edit Profile</a></li>
                 </ul>
                 <form class="navbar-form navbar-right">
-                    <div class="form-group" ng-hide="isUser">
-                        <input type="text" class="form-control" placeholder="Username" ng-model="userName" required>
-                        <input type="text" class="form-control" placeholder="Password" ng-model="password" required>
+                    <div ng-hide="isUser">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Username" ng-model="userName" required>
+                            <input type="text" class="form-control" placeholder="Password" ng-model="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" ng-click="signIn(userName, password)">Sign In</button>
                     </div>
-                    <button type="submit" class="btn btn-primary" ng-hide="isUser" ng-click="signIn(userName, password)">Sign In</button>
-                    <button type="button" class="btn btn-primary" ng-show="isUser" ng-click="signOut()">Sign Out</button>
+                    <div ng-show="isUser">
+                        <img ng-src="{{getNavGravatarUrl(currentUser.emailAddress)}}" alt="profile image for {{currentUser.emailAddress}}" ng-show="isUser" />
+                        <button type="button" class="btn btn-primary" ng-show="isUser" ng-click="signOut()">Sign Out</button>
+                    </div>
                 </form>
             </div>
         </nav>
@@ -83,6 +88,7 @@
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/controllers/NavbarController.js"></script>
     <script type="text/javascript" src="js/controllers/EditEventController.js"></script>
+    <script type="text/javascript" src="js/services/GravatarUrlBuilder.js"></script>
     <script type="text/javascript" src="js/services/CookieManager.js"></script>
     <script type="text/javascript" src="js/services/UserManager.js"></script>
     <script type="text/javascript" src="js/services/UserData.js"></script>

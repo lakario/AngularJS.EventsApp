@@ -3,7 +3,7 @@
 'use strict';
 
 eventsApp.controller('NavbarController',
-    function NavbarController($scope, $rootScope, $q, userManager) {
+    function NavbarController($scope, $rootScope, $q, userManager, gravatarUrlBuilder) {
         $scope.isUser = false;
 
         userManager.getCurrentUser().then(function (user) {
@@ -22,10 +22,9 @@ eventsApp.controller('NavbarController',
             userManager.signIn(userName, password).then(function (user) {
                 $scope.currentUser = user;
                 $scope.isUser = user !== undefined;
+                $rootScope.$broadcast('user.changed', user);
 
                 deferred.resolve('Sign in successful.');
-
-                $rootScope.$broadcast('user.changed', user);
             }, function () {
                 $scope.currentUser = null;
                 $scope.isUser = false;
@@ -44,5 +43,14 @@ eventsApp.controller('NavbarController',
 
             $rootScope.$broadcast('user.changed');
         }
+
+        $scope.$on('user.changed', function(event, user) {
+            $scope.currentUser = user;
+            $scope.isUser = user !== undefined;
+        });
+
+        $scope.getNavGravatarUrl = function (email) {
+            return gravatarUrlBuilder.buildGravatarUrl(email, 38);
+        };
     }
 );
