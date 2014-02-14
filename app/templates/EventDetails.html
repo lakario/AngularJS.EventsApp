@@ -54,25 +54,14 @@
         <ul class="thumbnails">
             <li ng-repeat="session in event.sessions | filter:search | filter:query | orderBy:sortorder | limitTo:limit" id="session{{session.id}}">
                 <div class="row session">
-                    <div class="col-md-1 votingWidget">
-                        <div class="col-md-6 col-md-offset-1">
-                            <div class="votingButton" ng-click="upVoteSession($event, event.id, session)" ng-show="isUser">
-                                <span class="glyphicon glyphicon-chevron-up"></span>
-                            </div>
-                            <div class="badge badge-inverse">
-                                <div>{{session.upVoteCount}}</div>
-                            </div>
-                            <div class="votingButton" ng-click="downVoteSession($event, event.id, session)" ng-show="isUser">
-                                <span class="glyphicon glyphicon-chevron-down"></span>
-                            </div>
-                        </div>
-                    </div>
+                    <vote upvote="upVoteSession(session)" downvote="downVoteSession(session)" count="session.upVoteCount" isUser="isUser"></vote>
                     <div class="well col-md-10">
-                        <h4 class="well-title">{{session.name}}</h4>
-                        <h6 style="margin-top:-10px">{{session.creatorName}}</h6>
-                        <span>Duration: {{session.duration | durations}}</span><br />
-                        <span>Level: {{session.level}}</span><br />
-                        <p>{{session.abstract}}</p>
+                        <collapsible title="{{session.name}}">
+                            <h6 style="margin-top:-10px">{{session.creatorName}}</h6>
+                            <span>Duration: {{session.duration | durations}}</span><br />
+                            <span>Level: {{session.level}}</span><br />
+                            <p>{{session.abstract}}</p>
+                        </collapsible>
                     </div>
                 </div>
             </li>

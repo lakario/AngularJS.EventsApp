@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/cosmo.bootstrap.min.css"/>
     <!--<link rel="stylesheet" href="css/bootstrap-theme.min.css"/>-->
     <link rel="stylesheet" href="css/app.css"/>
+    <link rel="stylesheet" href="css/jquery-ui.min.css"/>
 </head>
 <body ng-cloak>
     <div class="container">
@@ -26,16 +27,14 @@
                     </div>
                     <div ng-show="isUser">
                         <a href="#/user/editProfile"><strong class="userName">{{currentUser.name || currentUser.userName}}</strong></a>
-                        <img ng-src="{{getNavGravatarUrl(currentUser.emailAddress)}}" alt="profile image for {{currentUser.emailAddress}}" ng-show="isUser" />
+                        <gravatar email="{{currentUser.emailAddress}}" size="38" ng-show="isUser" />
                         <button type="button" class="btn btn-primary" ng-show="isUser" ng-click="signOut()">Sign Out</button>
                     </div>
                 </form>
             </div>
         </nav>
 
-        <ng-view>
-
-        </ng-view>
+        <ng-view></ng-view>
     </div>
     <script type="text/javascript" src="lib/angular/angular.js"></script>
     <script type="text/javascript" src="lib/jquery.min.js"></script>
@@ -55,6 +54,16 @@
     <script type="text/javascript" src="js/services/UserData.js"></script>
     <script type="text/javascript" src="js/services/EventData.js"></script>
     <script type="text/javascript" src="js/filters.js"></script>
+    <script type="text/javascript" src="js/directives/mySample.js"></script>
+    <script type="text/javascript" src="js/directives/eventThumbnail.js"></script>
+    <script type="text/javascript" src="js/directives/dateKeys.js"></script>
+    <script type="text/javascript" src="js/directives/vote.js"></script>
+    <script type="text/javascript" src="js/directives/gravatar.js"></script>
+    <script type="text/javascript" src="js/directives/datePicker.js"></script>
+    <script type="text/javascript" src="js/directives/collapsible.js"></script>
+    <script type="text/javascript" src="js/directives/focus.js"></script>
     <script type="text/javascript" src="lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="lib/jquery-ui.min.js"></script>
+
 </body>
 </html>

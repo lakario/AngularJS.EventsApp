@@ -1,9 +1,7 @@
 'use strict';
 
-'use strict';
-
 eventsApp.controller('NavbarController',
-    function NavbarController($scope, $rootScope, $q, userManager, gravatarUrlBuilder) {
+    function NavbarController($scope, $rootScope, $q, $location, userManager) {
         $scope.isUser = false;
 
         userManager.getCurrentUser().then(function (user) {
@@ -29,7 +27,7 @@ eventsApp.controller('NavbarController',
                 $scope.currentUser = null;
                 $scope.isUser = false;
 
-                deferred.reject('Unable to sign in.')
+                deferred.reject('Unable to sign in.');
             });
 
             return deferred.promise;
@@ -48,9 +46,5 @@ eventsApp.controller('NavbarController',
             $scope.currentUser = user;
             $scope.isUser = user !== undefined;
         });
-
-        $scope.getNavGravatarUrl = function (email) {
-            return gravatarUrlBuilder.buildGravatarUrl(email, 38);
-        };
     }
 );

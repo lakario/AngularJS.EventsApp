@@ -1,7 +1,7 @@
 'use strict';
 
 eventsApp.controller('EditProfileController',
-    function EditProfileController($scope, $rootScope, gravatarUrlBuilder, userManager) {
+    function EditProfileController($scope, $rootScope, userManager, $location) {
         $scope.user = {};
 
         var userPromise = userManager.getCurrentUser();
@@ -11,10 +11,6 @@ eventsApp.controller('EditProfileController',
                 $scope.user = user;
             });
         }
-
-        $scope.getGravatarUrl = function (email) {
-            return gravatarUrlBuilder.buildGravatarUrl(email, 200);
-        };
 
         $scope.saveUser = function (user, editProfileForm) {
             if (editProfileForm.$valid) {
@@ -27,7 +23,7 @@ eventsApp.controller('EditProfileController',
         }
 
         $scope.cancelEdit = function() {
-            window.location.hash = '#/events';
+            $location.url('/events');
         }
     }
 )

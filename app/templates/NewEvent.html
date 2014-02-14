@@ -6,11 +6,11 @@
             <fieldset>
                 <div class="form-group">
                     <label for="eventName">Event Name</label>
-                    <input id="eventName" type="text" ng-model="event.name" required class="form-control" placeholder="Name of event..." />
+                    <input id="eventName" type="text" ng-model="event.name" focus required class="form-control" placeholder="Name of event..." />
                 </div>
                 <div class="form-group">
                     <label for="eventDate">Event Date</label>
-                    <input id="eventDate" type="text" ng-model="event.date" required ng-pattern="/\d{1,2}/\d{1,2}/\d{4}/" class="form-control" placeholder="format (mm/dd/yyyy)..." />
+                    <input id="eventDate" type="text" ng-model="event.date" date-picker date-keys required ng-pattern="/\d{1,2}/\d{1,2}/(\d{2}|\d{4})/" class="form-control" placeholder="format (mm/dd/yyyy)..." />
                 </div>
                 <div class="form-group">
                     <label for="eventTime">Event Time</label>
@@ -43,7 +43,7 @@
             <br />
 
             <button type="submit" ng-click="saveEvent(event, newEventForm)" ng-disabled="newEventForm.$invalid" class="btn btn-primary">Save</button>
-            <button type="cancel" ng-click="cancelEdit()" class="btn btn-default">Cancel</button>
+            <button type="button" ng-click="cancelEdit()" class="btn btn-default">Cancel</button>
         </form>
     </div>
 </div>

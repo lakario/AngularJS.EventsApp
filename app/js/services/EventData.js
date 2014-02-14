@@ -1,11 +1,20 @@
 'use strict';
 
-eventsApp.factory('eventData', function ($resource, $http, $q) {
+eventsApp.factory('eventData', function ($resource, $http, $q, $timeout) {
     var resource = $resource('/data/event/:id', { id: '@id' });
 
     return {
         getAllEvents: function () {
             return resource.query()
+        },
+        getAllEventsSlow: function (latency) {
+            var deferred = $q.defer();
+
+            $timeout(function() {
+                deferred.resolve(resource.query());
+            }, latency || 3000);
+
+            return deferred.promise;
         },
         getEvent: function (id) {
             var deferred = $q.defer();
@@ -37,7 +46,6 @@ eventsApp.factory('eventData', function ($resource, $http, $q) {
             if (!event.id) {
                 this.getAllEvents().then(function (events) {
                     event.id = _.last(events).id + 1;
-
                     fnSave();
                 });
             } else {

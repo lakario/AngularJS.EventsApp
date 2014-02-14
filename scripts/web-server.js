@@ -11,7 +11,7 @@ var util = require('util'),
     url = require('url'),
     events = require('events');
 
-var DEFAULT_PORT = 8220;
+var DEFAULT_PORT = 8230;
 
 function main(argv) {
     new HttpServer({
