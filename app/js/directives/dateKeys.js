@@ -15,7 +15,6 @@ eventsApp.directive('dateKeys', function () {
         }
     };
 
-
     function isNumericKeyCode(keyCode) {
         return (keyCode >= 48 && keyCode <= 57)
             || (keyCode >= 96 && keyCode <= 105);
